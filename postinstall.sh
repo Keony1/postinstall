@@ -40,8 +40,7 @@ fi
 # ## Downloading external programs ##
 mkdir -p $DOWNLOADS_DIRECTORY
 for url in ${DEB_PROGRAMS[@]}; do
-    # wget -c "$url" -P "$DOWNLOADS_DIRECTORY"
-    echo $url
+    wget -c "$url" -P "$DOWNLOADS_DIRECTORY"
 done
 sudo dpkg -i $DOWLOADS_DIRECTORY/*.deb
 
