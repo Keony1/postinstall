@@ -29,7 +29,7 @@ SNAP_PROGRAMS=(
     discord
 )
 
-# ## .DEB PROGRAMS AREA ##
+## .DEB PROGRAMS AREA ##
 ## -h stands for home instalation ##
 if [ "$1" = "-h" ]; then
     DEB_PROGRAMS+=(
@@ -37,17 +37,17 @@ if [ "$1" = "-h" ]; then
     )
 fi
 
-# ## Downloading external programs ##
+## Downloading external programs ##
 mkdir -p $DOWNLOADS_DIRECTORY
 for url in ${DEB_PROGRAMS[@]}; do
     wget -c "$url" -P "$DOWNLOADS_DIRECTORY"
 done
 sudo dpkg -i $DOWLOADS_DIRECTORY/*.deb
 
-# ## SH FILES AREA ##
+## SH FILES AREA ##
 
-# # I think that have a better way to execute .sh files that have same name
-# # but i dont know how ...yet
+# I think that have a better way to execute .sh files that have same name
+# but i dont know how ...yet
 counter=0
 for program in ${SH_PROGRAMS[@]}; do
     name="${counter}.sh"
@@ -57,19 +57,19 @@ for program in ${SH_PROGRAMS[@]}; do
 done
 bash $DOWNLOADS_DIRECTORY/*.sh
 
-# ## APT GET AREA ##
+## APT GET AREA ##
 for program in ${APT_PROGRAMS[@]}; do
   if ! dpkg -l | grep -q $program; then
     sudo apt install "$program" -y
   fi
 done
 
-# ## SNAP AREA ##
+## SNAP AREA ##
 for program in ${SNAP_PROGRAMS[@]};do
     sudo snap install $program
 done
 
-# ## DOCKER CONFIGURATION ##
+## DOCKER CONFIGURATION ##
 sudo apt-get update
 sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -78,7 +78,7 @@ sudo apt-get update
 sudo usermod -aG docker $USER
 
 
-## ZSH CONFIGURATION ##
+# ## ZSH CONFIGURATION ##
 # setting zsh as default
 sudo chsh -s $(which zsh) $(whoami)
 sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
@@ -88,6 +88,10 @@ sudo mv -f -v .zshrc $HOME/.zshrc
 
 ## installing node
 nvm install node
+
+##installing golang version 1.15.5
+wget -c https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz -P $DOWNLOADS_DIRECTORY
+sudo tar -C /usr/local -xzf $DOWNLOADS_DIRECTORY/go1.15.5.linux-amd64.tar.gz
 
 ## POST INSTALATION ##
 sudo apt update && sudo apt dist-upgrade -y
