@@ -6,18 +6,19 @@ test -f /var/lib/dpkg/lock-frontend && sudo rm -rf /var/lib/dpkg/lock-frontend
 
 DOWNLOADS_DIRECTORY="$HOME/tmp_programs"
 
+# its necessary on Mint 20
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update
+
 APT_PROGRAMS=(
-    snapd
+    snap
     git
     docker
     docker-compose
     zsh
 )
 
-DEB_PROGRAMS=(
-    "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-    "https://az764295.vo.msecnd.net/stable/e5a624b788d92b8d34d1392e4c4d9789406efe8f/code_1.51.1-1605051630_amd64.deb"
-)
+DEB_PROGRAMS=()
 
 SH_PROGRAMS=(
     "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
@@ -25,6 +26,8 @@ SH_PROGRAMS=(
 )
 
 SNAP_PROGRAMS=(
+    chrome
+    code
     postman
     discord
 )
